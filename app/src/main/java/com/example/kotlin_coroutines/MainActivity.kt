@@ -10,6 +10,7 @@ import com.example.kotlin_coroutines.databinding.ActivityMainBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
+import kotlinx.coroutines.async
 import kotlinx.coroutines.cancelAndJoin
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.delay
@@ -112,12 +113,20 @@ class MainActivity : AppCompatActivity() {
 
                 val task1 = launch { Log.d(debug, task1()) }
                 val task2 = launch { Log.d(debug, task2()) }
+                val asyncTask1 = async { task1() }
+                val asyncTask2 = async { task2() }
 
                 //                Log.d(debug, task1() + " without launch")
                 //                Log.d(debug, task2() + " without launch")
 
                 //                joinAll(task1, task2)
                 //                Log.d(debug, "task1 & task2 finished")
+
+                if (asyncTask1.await() == asyncTask2.await()) {
+                    Log.d(debug, "equal")
+                } else {
+                    Log.d(debug, "not equal")
+                }
 
                 task2.cancelAndJoin()
                 task1.join()
