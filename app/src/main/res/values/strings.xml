@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">kotlin coroutines</string>
+    <string name="to_string">%1$s</string>
+</resources>
